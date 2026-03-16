@@ -93,6 +93,7 @@ export default ({
             </FilterButton>
           </Box>
         ) : null}
+        {/* Campfire banner — disabled
           <Box
             as="a"
             href="https://campfire.hackclub.com/?ref=hackathons"
@@ -111,6 +112,7 @@ export default ({
               style={{ width: '100%', height: 'auto', borderRadius: '12px' }}
             />
           </Box>
+        */}
         <Grid columns={[1, 2, 3]} gap={[3, 4]} sx={{ mt: useFilter ? [2, 3, 4] : [3, 4, 5] }}>
           {events.map(event => (
             <EventCard id={event.id} key={event.id} {...event} useFilter={true} />

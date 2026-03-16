@@ -3,7 +3,7 @@ import { pick, split, range } from 'lodash'
 import Link from 'next/link'
 import theme from '../lib/theme'
 
-const years = range(2017, new Date().getFullYear() + 1)
+const years = range(2024, new Date().getFullYear() + 1)
 
 const palette = pick(
   theme.colors,

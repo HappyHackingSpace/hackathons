@@ -1,7 +1,7 @@
 import Error from 'next/error'
 import Grouping from '../components/grouping'
 import Regions from '../components/regions'
-import Signup from '../components/signup'
+// import Signup from '../components/signup'
 import { map, orderBy, find, kebabCase, startCase } from 'lodash'
 import { getGroupingData } from '../lib/data'
 import { Box } from 'theme-ui'
@@ -16,7 +16,7 @@ export default ({ name, events, emailStats }) => {
       )}`}
       desc={`Find, register, and compete in ${events.length} student-led hackathons around ${name}.`}
       events={events}
-      header={<Signup stats={emailStats} initialLocation={startCase(name)} />}
+      header={null}
       footer={
         <>
           {' '}
@@ -48,62 +48,31 @@ const distance = (lat1, lon1, lat2, lon2) => {
   }
 }
 
+// Normalize Turkish characters to ASCII for accent-insensitive comparison
+// ı→i, İ→i, ş→s, ç→c, ğ→g, ö→o, ü→u (and uppercase variants)
+const normalizeTR = str =>
+  (str || '')
+    .toLowerCase()
+    .replace(/ı/g, 'i')
+    .replace(/İ/g, 'i')
+    .replace(/ş/g, 's')
+    .replace(/Ş/g, 's')
+    .replace(/ç/g, 'c')
+    .replace(/Ç/g, 'c')
+    .replace(/ğ/g, 'g')
+    .replace(/Ğ/g, 'g')
+    .replace(/ö/g, 'o')
+    .replace(/Ö/g, 'o')
+    .replace(/ü/g, 'u')
+    .replace(/Ü/g, 'u')
+
+const cityMatch = (eventCity, target) =>
+  normalizeTR(eventCity) === normalizeTR(target)
+
 let regions = [
   {
-    name: 'Los Angeles',
-    filter: event => event.city === 'Los Angeles'
-  },
-  {
-    name: 'Chicago',
-    filter: event => {
-      const position = [41.969649, -87.720643]
-      return (
-        distance(position[0], position[1], event.latitude, event.longitude)
-          .miles < 42
-      )
-    }
-  },
-  {
-    name: 'New York',
-    filter: event => {
-      const position = [40.7128, -74.006]
-      return (
-        distance(position[0], position[1], event.latitude, event.longitude)
-          .miles < 50
-      )
-    }
-  },
-  {
-    name: 'the Bay Area',
-    filter: event => {
-      const position = [37.641045, -122.228916]
-      return (
-        distance(position[0], position[1], event.latitude, event.longitude)
-          .miles < 39
-      )
-    }
-  },
-  {
-    name: 'Singapore',
-    filter: event => event.city === 'Singapore'
-  },
- {
-    name: 'Toronto',
-    filter: event => {
-      const position = [43.6510, -79.3470]
-      return (
-        distance(position[0], position[1], event.latitude, event.longitude)
-          .miles < 120
-      )
-    }
-  },
-    {
-    name: 'the USA',
-    filter: event => ['US', 'USA'].includes(event.countryCode)
-  },
-  {
-    name: 'Canada',
-    filter: event => ['CA', 'CAN'].includes(event.countryCode)
+    name: 'Diyarbakır',
+    filter: event => cityMatch(event.city, 'Diyarbakır')
   }
 ]
 regions = map(regions, region => ({ id: kebabCase(region.name), ...region }))
@@ -112,7 +81,7 @@ export const getStaticPaths = () => {
   const paths = map(map(regions, 'id'), id => ({
     params: { region: `list-of-hackathons-in-${id}` }
   }))
-  return { paths, fallback: false }
+  return { paths, fallback: 'blocking' }
 }
 
 export const getStaticProps = async ({ params }) => {

@@ -1,8 +1,8 @@
 import Grouping from '../components/grouping'
 import { Box, Heading, Text, Link, Container } from 'theme-ui'
 import Head from 'next/head'
-import Meta from '@hackclub/meta'
-import Signup from '../components/signup'
+import Meta from '@happyhackingspace/meta'
+// import Signup from '../components/signup'
 import Years from '../components/years'
 import Regions from '../components/regions'
 import EventCard from '../components/event-card'
@@ -10,7 +10,7 @@ import { filter, orderBy, slice, last, remove } from 'lodash'
 import { timeSince, humanizedDateRange } from '../lib/util'
 import { getGroupingData } from '../lib/data'
 
-const title = `High School Hackathons in ${new Date().getFullYear()}`
+const title = `Happy Hacking Space Hackathons ${new Date().getFullYear()}`
 const eventsPreview = events =>
   slice(events, 0, 4)
     .map(
@@ -29,19 +29,18 @@ export default ({ stats, emailStats, events, header }) => (
         <Meta
           as={Head}
           title={title}
-          description={`${title}. A curated list of online and in-person high school hackathons with ${
-            events.length
-          } events in ${stats.state} states + ${
-            stats.country
-          } countries. Maintained by the Hack Club staff. ${eventsPreview(
-            events
-          )}`}
+          description={`${title}. A curated list of online and in-person high school hackathons with ${events.length
+            } events in ${stats.state} states + ${stats.country
+            } countries. Maintained by Happy Hacking Space. ${eventsPreview(
+              events
+            )}`}
         />
         <Heading as="h1" variant="title" sx={{ color: 'primary', textShadow: 'elevated' }}>
-          Upcoming High School Hackathons{' '}
-          in {new Date().getFullYear()}
+          Happy Hacking Space{' '}
+          <Box as="br" sx={{ display: ['none', 'block'] }} />
+          Hackathons {new Date().getFullYear()}
         </Heading>
-        <Text as="p" variant="subtitle" sx={{ my: 3, color: 'white', textShadow: 'text'  }}>
+        <Text as="p" variant="subtitle" sx={{ my: 3, color: 'white', textShadow: 'text' }}>
           A curated list of high school hackathons with
           <Box as="br" sx={{ display: ['none', 'block'] }} /> {stats.total}
           &nbsp;events in {stats.state}
@@ -64,10 +63,10 @@ export default ({ stats, emailStats, events, header }) => (
       </section>
     }
     useFilter
-    
+
   >
     <Box mb={[3, 3, 4]}>
-      <Signup />
+      {/* <Signup /> */}
     </Box>
   </Grouping>
 )
@@ -75,7 +74,7 @@ export default ({ stats, emailStats, events, header }) => (
 export const getStaticProps = async () => {
   let { events, emailStats } = await getGroupingData()
   let headerImages = [
-    "/header.jpg"
+    "/hhs11.jpg"
   ]
   let stats = {
     total: events.length,
@@ -85,12 +84,9 @@ export const getStaticProps = async () => {
         .map(event => event.state)
     ).size,
     country: new Set(events.map(event => event.country)).size,
-    lastUpdated: timeSince(
-      last(orderBy(events, 'createdAt')).createdAt,
-      false,
-      new Date(),
-      true
-    )
+    lastUpdated: events.length > 0
+      ? timeSince(last(orderBy(events, 'createdAt')).createdAt, false, new Date(), true)
+      : 'recently'
   }
   // Sort upcoming events by start date
   let upcomingEvents = orderBy(
@@ -102,5 +98,5 @@ export const getStaticProps = async () => {
     'start',
     'desc'
   )
-  return { props: { events: [ ...upcomingEvents, ...previousEvents ], stats, emailStats, header: headerImages[Math.floor(Math.random() * headerImages.length)] }, revalidate: 1 }
+  return { props: { events: [...upcomingEvents, ...previousEvents], stats, emailStats, header: headerImages[Math.floor(Math.random() * headerImages.length)] }, revalidate: 1 }
 }

@@ -1,12 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import Head from 'next/head'
-import Meta from '@hackclub/meta'
+import Meta from '@happyhackingspace/meta'
 import { useColorMode, Box, Link } from 'theme-ui'
 import { filter, orderBy, slice, last, remove } from 'lodash'
 import { timeSince, humanizedDateRange } from '../lib/util'
 import { getGroupingData } from '../lib/data'
-mapboxgl.accessToken = 'pk.eyJ1IjoiaGFja2NsdWIyIiwiYSI6ImNsbDNzY2syazA2ZnQzcm1vMXhndG9nOGkifQ.MQ6hlMQ58LXlipkyJ075tQ';
+mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || '';
 
 const uniquify = arr => [...new Set(arr)]
 

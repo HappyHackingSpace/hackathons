@@ -20,12 +20,22 @@ export default ({ year, events }) => {
 }
 
 export const getStaticPaths = async () => {
+  // Always pre-generate paths for 2024 up to current year
+  const currentYear = new Date().getFullYear()
+  const fixedYears = []
+  for (let y = 2024; y <= currentYear; y++) fixedYears.push(String(y))
+
+  // Also add any years found in existing events
   let events = await getEvents()
   let starts = map(events, 'start')
-  starts = map(starts, (start) => first(split(start, '-')))
-  let years = uniq(starts)
-  const paths = map(years, (year) => ({ params: { year } }))
-  return { paths, fallback: false }
+  starts = map(starts, start => first(split(start, '-')))
+  const eventYears = uniq(starts).filter(Boolean)
+
+  const allYears = uniq([...fixedYears, ...eventYears])
+  const paths = map(allYears, year => ({ params: { year } }))
+
+  // fallback: 'blocking' — unknown years are rendered on-demand (no 404)
+  return { paths, fallback: 'blocking' }
 }
 
 export const getStaticProps = async ({ params }) => {

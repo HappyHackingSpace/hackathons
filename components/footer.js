@@ -1,6 +1,12 @@
 import Footer from './footer.mdx'
 import { Container, Box } from 'theme-ui'
 
+const ExternalLink = ({ href, children }) => (
+  <a href={href} target="_blank" rel="noopener noreferrer">
+    {children}
+  </a>
+)
+
 export default () => (
   <Box
     as="footer"
@@ -18,7 +24,8 @@ export default () => (
         a: { variant: 'styles.a', color: 'primary' }
       }}
     >
-      <Footer />
+      <Footer components={{ a: ExternalLink }} />
     </Container>
   </Box>
 )
+

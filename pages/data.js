@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import Meta from '@hackclub/meta'
+import Meta from '@happyhackingspace/meta'
 import { Container, BaseStyles } from 'theme-ui'
 import Content from '../components/api.mdx'
 
@@ -8,7 +8,7 @@ export default () => (
     <Meta
       as={Head}
       title="Data API"
-      name="Hack Club Hackathons"
+      name="Happy Hacking Space Hackathons"
       description="API for listing upcoming high school hackathons around the world."
       image="/card.png"
     />

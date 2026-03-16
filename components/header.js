@@ -1,7 +1,7 @@
 import { Box, Container, Heading } from 'theme-ui'
 import Head from 'next/head'
 import Nav from './nav'
-import Meta from '@hackclub/meta'
+import Meta from '@happyhackingspace/meta'
 
 export default ({
   centered = true,

@@ -1,8 +1,8 @@
 import React from 'react'
 import Head from 'next/head'
 
-import Meta from '@hackclub/meta'
-import '@hackclub/theme/fonts/reg-bold.css'
+import Meta from '@happyhackingspace/meta'
+import '@happyhackingspace/theme/fonts/reg-bold.css'
 import 'mapbox-gl/dist/mapbox-gl.css';
 import theme from '../lib/theme'
 import { ThemeProvider } from 'theme-ui'
@@ -15,9 +15,9 @@ const App = ({ Component, pageProps }) => (
   <ThemeProvider theme={theme}>
     <Meta
       as={Head}
-      title="Hack Club Hackathons"
-      name="Hack Club Hackathons"
-      description="Listing of upcoming online and in-person high school hackathons around the world."
+      title="Happy Hacking Space Hackathons"
+      name="Happy Hacking Space Hackathons"
+      description="A curated list of online and in-person hackathons organized by and for high school students."
       image="/card.png"
     />
     <Analytics />

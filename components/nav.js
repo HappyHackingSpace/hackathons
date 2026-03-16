@@ -43,16 +43,29 @@ const BackButton = ({ to = '/', text = 'All Hackathons' }) => (
 
 const Flag = () => (
   <A
-    href="https://hackclub.com/"
+    href="https://happyhackingspace.com/"
     target="_blank"
     rel="noopener noreferrer"
-    aria-label="Hack Club homepage"
-    sx={{ mt: -3, lineHeight: 0 }}
+    aria-label="Happy Hacking Space homepage"
+    sx={{
+      lineHeight: 0,
+      display: 'block',
+      flexShrink: 0,
+      transformOrigin: 'top left',
+      transition: '0.2s cubic-bezier(0.375, 0, 0.675, 1) transform',
+      ':hover,:focus': {
+        animation: 'waveFlag 0.5s linear infinite alternate'
+      },
+      '@keyframes waveFlag': {
+        from: { transform: 'rotate(0deg)' },
+        to: { transform: 'rotate(-5deg)' }
+      }
+    }}
   >
     <Image
-      src="https://assets.hackclub.com/flag-orpheus-top.svg"
-      alt="Hack Club flag"
-      sx={{ width: [96, 128] }}
+      src="https://assets.happyhacking.space/flag-standalone.svg"
+      alt="Happy Hacking Space"
+      sx={{ width: [96, 120], height: 'auto' }}
     />
   </A>
 )
@@ -100,7 +113,7 @@ export default ({app = false}) => {
         <Button
           as="a"
           variant="outline"
-          href="https://dash.hackathons.hackclub.com/hackathons/submissions/new"
+          href="/submit"
           aria-label="Apply to list your hackathon"
           sx={{
             width: 'auto',
@@ -119,8 +132,10 @@ export default ({app = false}) => {
         </Button>
         <NavButton
           as="a"
-          href="https://github.com/hackclub/hackathons"
+          href="https://github.com/happyhackingspace/hackathons"
           aria-label="View source code on GitHub"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           <GitHub size={24} />
         </NavButton>

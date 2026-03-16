@@ -1,7 +1,7 @@
 import Grouping from '../components/grouping'
 import Regions from '../components/regions'
-import Meta from '@hackclub/meta'
-import Signup from '../components/signup'
+import Meta from '@happyhackingspace/meta'
+// import Signup from '../components/signup'
 import { Heading, Text, Link } from 'theme-ui'
 import Head from 'next/head'
 import { orderBy, filter } from 'lodash'
@@ -17,8 +17,8 @@ export default ({ events, emailStats }) => {
         <>
           <Meta
             as={Head}
-            title="High School Hackathons"
-            description={`${title}. A curated list of online and in-person high school hackathons in the Asia-Pacific region, maintained by Hack Club staff.`}
+            title="High School Hackathons — Happy Hacking Space"
+            description={`${title}. A curated list of online and in-person high school hackathons in the Asia-Pacific region, maintained by Happy Hacking Space.`}
           />
           <Heading as="h1" variant="title" sx={{ color: 'primary' }}>
             High School Hackathons in the Asia-Pacific Region
@@ -27,8 +27,8 @@ export default ({ events, emailStats }) => {
             A curated list of in-person and online high school hackathons.
             <Text as="p" variant="subtitle">
               {' '}
-              Maintained by the{' '}
-              <Link href="https://hackclub.com/">Hack Club</Link> staff.
+              Maintained by{' '}
+              <Link href="https://happyhackingspace.com/">Happy Hacking Space</Link>.
             </Text>
           </Text>
         </>
@@ -36,7 +36,7 @@ export default ({ events, emailStats }) => {
       events={events}
       footer={
         <section>
-          <Signup stats={emailStats} />
+          {/* <Signup stats={emailStats} /> */}
           <Heading variant="headline" sx={{ mt: [4, 5], mb: [3, 4] }}>
             Explore popular regions
           </Heading>
