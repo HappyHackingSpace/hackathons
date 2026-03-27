@@ -2,7 +2,7 @@ import Grouping from '../components/grouping'
 import { Box, Heading, Text, Link, Container } from 'theme-ui'
 import Head from 'next/head'
 import Meta from '@happyhackingspace/meta'
-// import Signup from '../components/signup'
+import Signup from '../components/signup'
 import Years from '../components/years'
 import Regions from '../components/regions'
 import EventCard from '../components/event-card'
@@ -66,7 +66,7 @@ export default ({ stats, emailStats, events, header }) => (
 
   >
     <Box mb={[3, 3, 4]}>
-      {/* <Signup /> */}
+      <Signup />
     </Box>
   </Grouping>
 )

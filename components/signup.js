@@ -11,7 +11,7 @@ import {
   Alert
 } from 'theme-ui'
 import { AlertTriangle, Send } from 'react-feather'
-import { api_url_for } from '../lib/data'
+// import { api_url_for } from '../lib/data'
 
 const Loading = () => (
   <Spinner
@@ -29,6 +29,7 @@ export default ({ initialLocation, stats = {} }) => {
   const [submitting, setSubmitting] = useState(false)
   const [done, setDone] = useState(false)
   const [error, setError] = useState('')
+  const [reqData, setReqData] = useState({})
   const onSubmit = async e => {
     e.preventDefault()
     if (email.length < 3 || location.length < 3) return
@@ -39,16 +40,15 @@ export default ({ initialLocation, stats = {} }) => {
     } catch (err) {
       console.error(err)
     }
-    let submission = await fetch(api_url_for('v1/hackathons/subscriptions'), {
+    let submission = await fetch('/api/subscribe', {
       method: 'POST',
-      body: JSON.stringify({ email, location }),
+      body: JSON.stringify({ email, location, ...reqData }),
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
       }
     })
     if (submission.ok) {
-      submission = await submission.json()
       setEmail('')
       setLocation('')
       setSubmitting(false)
@@ -56,10 +56,10 @@ export default ({ initialLocation, stats = {} }) => {
       setDone(true)
       setError('')
     } else {
-      submission = await submission.json()
+      const data = await submission.json()
       setSubmitting(false)
 
-      setError(submission.detail || submission.title || 'Something went wrong')
+      setError(data.error || 'Something went wrong. Please try again later.')
       setDone(false)
     }
   }
@@ -85,6 +85,18 @@ export default ({ initialLocation, stats = {} }) => {
           input: { bg: 'sunken' }
         }}
       >
+        <div style={{ display: 'none' }} aria-hidden="true">
+          <Label htmlFor="firstName">First Name</Label>
+          <Input
+            type="text"
+            name="firstName"
+            id="firstName"
+            autoComplete="off"
+            tabIndex="-1"
+            value={reqData.firstName || ''}
+            onChange={e => setReqData({ ...reqData, firstName: e.target.value })}
+          />
+        </div>
         <div>
           <Label htmlFor="email">Email</Label>
           <Input
